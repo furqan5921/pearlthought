@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { DashboardHome } from '@/components/dashboard/DashboardHome';
+import { TeachersSection } from '@/components/sections/TeachersSection';
 import { useTeacherStore } from '@/lib/store';
 import { initializeMockData } from '@/lib/mock-data';
 
-export default function Home() {
+export default function TeachersPage() {
   const { setTeachers } = useTeacherStore();
 
   // Initialize with mock data on first load
@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <DashboardHome />
+      <TeachersSection />
     </MainLayout>
   );
 }
