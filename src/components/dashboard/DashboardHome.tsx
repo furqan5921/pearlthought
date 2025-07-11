@@ -1,81 +1,88 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  PieChart,
-  Pie,
-  Cell
-} from 'recharts';
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
-  Users,
+  mockAttendanceTrends,
+  mockSalaryBreakdown,
+  mockTeachers,
+} from "@/lib/mock-data";
+import { useDashboardStore } from "@/lib/store";
+import {
   Calendar,
   DollarSign,
   TrendingUp,
-  Clock,
   UserCheck,
-  UserX,
-  AlertCircle
-} from 'lucide-react';
-import { useDashboardStore } from '@/lib/store';
-import { mockAttendanceTrends, mockSalaryBreakdown, mockTeachers } from '@/lib/mock-data';
+  Users,
+} from "lucide-react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'];
+const COLORS = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444"];
 
 export function DashboardHome() {
   const { metrics } = useDashboardStore();
-  
+
   // Compute stats from metrics and mock data
   const stats = {
     totalTeachers: metrics.totalTeachers || mockTeachers.length,
-    presentToday: mockTeachers.filter(t => t.status === 'active').length - 1, // Mock: 4 present
-    onLeave: mockTeachers.filter(t => t.status === 'on-leave').length,
+    presentToday: mockTeachers.filter((t) => t.status === "active").length - 1, // Mock: 4 present
+    onLeave: mockTeachers.filter((t) => t.status === "on-leave").length,
     pendingLeaveRequests: metrics.pendingLeaveRequests || 1,
-    averagePerformance: mockTeachers.reduce((sum, t) => sum + (t.performanceRating || 0), 0) / mockTeachers.length
+    averagePerformance:
+      mockTeachers.reduce((sum, t) => sum + (t.performanceRating || 0), 0) /
+      mockTeachers.length,
   };
 
   // Mock data for charts
   const attendanceData = mockAttendanceTrends.slice(-7);
   const salaryData = mockSalaryBreakdown;
   const departmentData = [
-    { name: 'Science', value: 2, color: '#3B82F6' },
-    { name: 'Arts', value: 2, color: '#10B981' },
-    { name: 'Technology', value: 1, color: '#F59E0B' }
+    { name: "Science", value: 2, color: "#3B82F6" },
+    { name: "Arts", value: 2, color: "#10B981" },
+    { name: "Technology", value: 1, color: "#F59E0B" },
   ];
 
   const recentActivities = [
     {
-      id: '1',
-      type: 'attendance',
-      message: 'Sarah Johnson marked present',
-      time: '2 minutes ago',
-      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Sarah%20Johnson'
+      id: "1",
+      type: "attendance",
+      message: "Sarah Johnson marked present",
+      time: "2 minutes ago",
+      avatar: "https://api.dicebear.com/7.x/initials/svg?seed=Sarah%20Johnson",
     },
     {
-      id: '2',
-      type: 'leave',
-      message: 'Michael Chen requested vacation leave',
-      time: '1 hour ago',
-      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Michael%20Chen'
+      id: "2",
+      type: "leave",
+      message: "Michael Chen requested vacation leave",
+      time: "1 hour ago",
+      avatar: "https://api.dicebear.com/7.x/initials/svg?seed=Michael%20Chen",
     },
     {
-      id: '3',
-      type: 'salary',
-      message: 'July salary processed for all teachers',
-      time: '3 hours ago',
-      avatar: null
-    }
+      id: "3",
+      type: "salary",
+      message: "July salary processed for all teachers",
+      time: "3 hours ago",
+      avatar: null,
+    },
   ];
 
   return (
@@ -83,14 +90,18 @@ export function DashboardHome() {
       {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-1">Welcome back! Here's what's happening at your school today.</p>
+        <p className="text-gray-600 mt-1">
+          Welcome back! Here&apos;s what&apos;s happening at your school today.
+        </p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Teachers</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Teachers
+            </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -109,7 +120,10 @@ export function DashboardHome() {
           <CardContent>
             <div className="text-2xl font-bold">{stats.presentToday}</div>
             <p className="text-xs text-muted-foreground">
-              <span className="text-green-600">{((stats.presentToday / stats.totalTeachers) * 100).toFixed(0)}%</span> attendance rate
+              <span className="text-green-600">
+                {((stats.presentToday / stats.totalTeachers) * 100).toFixed(0)}%
+              </span>{" "}
+              attendance rate
             </p>
           </CardContent>
         </Card>
@@ -129,11 +143,15 @@ export function DashboardHome() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg Performance</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Avg Performance
+            </CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.averagePerformance.toFixed(1)}</div>
+            <div className="text-2xl font-bold">
+              {stats.averagePerformance.toFixed(1)}
+            </div>
             <p className="text-xs text-muted-foreground">
               <span className="text-green-600">+0.2</span> from last review
             </p>
@@ -147,23 +165,50 @@ export function DashboardHome() {
         <Card>
           <CardHeader>
             <CardTitle>Attendance Trend</CardTitle>
-            <CardDescription>Daily attendance for the past week</CardDescription>
+            <CardDescription>
+              Daily attendance for the past week
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={attendanceData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="date" 
-                  tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(value) =>
+                    new Date(value).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })
+                  }
                 />
                 <YAxis />
-                <Tooltip 
-                  labelFormatter={(value) => new Date(value).toLocaleDateString()}
+                <Tooltip
+                  labelFormatter={(value) =>
+                    new Date(value).toLocaleDateString()
+                  }
                 />
-                <Line type="monotone" dataKey="present" stroke="#10B981" strokeWidth={2} name="Present" />
-                <Line type="monotone" dataKey="absent" stroke="#EF4444" strokeWidth={2} name="Absent" />
-                <Line type="monotone" dataKey="late" stroke="#F59E0B" strokeWidth={2} name="Late" />
+                <Line
+                  type="monotone"
+                  dataKey="present"
+                  stroke="#10B981"
+                  strokeWidth={2}
+                  name="Present"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="absent"
+                  stroke="#EF4444"
+                  strokeWidth={2}
+                  name="Absent"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="late"
+                  stroke="#F59E0B"
+                  strokeWidth={2}
+                  name="Late"
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -189,7 +234,10 @@ export function DashboardHome() {
                   dataKey="value"
                 >
                   {departmentData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
                   ))}
                 </Pie>
                 <Tooltip />
@@ -212,8 +260,15 @@ export function DashboardHome() {
               <BarChart data={salaryData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="department" />
-                <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`} />
-                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Total Salary']} />
+                <YAxis
+                  tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+                />
+                <Tooltip
+                  formatter={(value) => [
+                    `$${value.toLocaleString()}`,
+                    "Total Salary",
+                  ]}
+                />
                 <Bar dataKey="totalSalary" fill="#3B82F6" />
               </BarChart>
             </ResponsiveContainer>

@@ -1,23 +1,21 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import {
-  LayoutDashboard,
-  Users,
+  BarChart3,
+  Bell,
   Calendar,
   DollarSign,
-  TrendingUp,
-  BarChart3,
-  Settings,
+  LayoutDashboard,
   School,
-  Bell,
-  Menu,
-  X
-} from 'lucide-react';
+  Settings,
+  TrendingUp,
+  Users,
+  X,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -26,47 +24,47 @@ interface SidebarProps {
 
 const navigationItems = [
   {
-    title: 'Dashboard',
-    href: '/',
+    title: "Dashboard",
+    href: "/",
     icon: LayoutDashboard,
-    badge: null
+    badge: null,
   },
   {
-    title: 'Teachers',
-    href: '/teachers',
+    title: "Teachers",
+    href: "/teachers",
     icon: Users,
-    badge: '5'
+    badge: "5",
   },
   {
-    title: 'Attendance',
-    href: '/attendance',
+    title: "Attendance",
+    href: "/attendance",
     icon: Calendar,
-    badge: null
+    badge: null,
   },
   {
-    title: 'Salary',
-    href: '/salary',
+    title: "Salary",
+    href: "/salary",
     icon: DollarSign,
-    badge: null
+    badge: null,
   },
   {
-    title: 'Progress',
-    href: '/progress',
+    title: "Progress",
+    href: "/progress",
     icon: TrendingUp,
-    badge: null
+    badge: null,
   },
   {
-    title: 'Analytics',
-    href: '/analytics',
+    title: "Analytics",
+    href: "/analytics",
     icon: BarChart3,
-    badge: null
+    badge: null,
   },
   {
-    title: 'Settings',
-    href: '/settings',
+    title: "Settings",
+    href: "/settings",
     icon: Settings,
-    badge: null
-  }
+    badge: null,
+  },
 ];
 
 export function Sidebar({ isOpen, onToggle }: SidebarProps) {
@@ -76,7 +74,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
     <>
       {/* Mobile Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={onToggle}
         />
@@ -100,7 +98,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
               <p className="text-xs text-gray-500">Teacher Portal</p>
             </div>
           </div>
-          
+
           {/* Mobile Close Button */}
           <button
             onClick={onToggle}
@@ -115,7 +113,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
           {navigationItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
-            
+
             return (
               <Link
                 key={item.href}
@@ -134,15 +132,17 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
                 )}
               >
                 <div className="flex items-center space-x-3">
-                  <Icon className={cn(
-                    "w-5 h-5",
-                    isActive ? "text-blue-600" : "text-gray-500"
-                  )} />
+                  <Icon
+                    className={cn(
+                      "w-5 h-5",
+                      isActive ? "text-blue-600" : "text-gray-500"
+                    )}
+                  />
                   <span>{item.title}</span>
                 </div>
-                
+
                 {item.badge && (
-                  <Badge 
+                  <Badge
                     variant={isActive ? "default" : "secondary"}
                     className="text-xs"
                   >
@@ -162,7 +162,9 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900">System Status</p>
-              <p className="text-xs text-gray-500 truncate">All systems operational</p>
+              <p className="text-xs text-gray-500 truncate">
+                All systems operational
+              </p>
             </div>
             <div className="w-2 h-2 bg-green-400 rounded-full"></div>
           </div>

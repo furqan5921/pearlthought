@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { mockAttendanceTrends } from "@/lib/mock-data";
-import { useAttendanceStore, useTeacherStore } from "@/lib/store";
+import { useTeacherStore } from "@/lib/store";
 import {
   Award,
   BookOpen,
@@ -58,13 +58,11 @@ const COLORS = [
 
 export function AnalyticsSection() {
   const { teachers } = useTeacherStore();
-  const { attendance } = useAttendanceStore();
   const [timeRange, setTimeRange] = useState("7d");
   const [selectedMetric, setSelectedMetric] = useState("overview");
 
   // Calculate key metrics
   const totalTeachers = teachers.length;
-  const activeTeachers = teachers.filter((t) => t.status === "active").length;
   const averageSalary =
     teachers.length > 0
       ? teachers.reduce((sum, t) => sum + t.salary, 0) / teachers.length

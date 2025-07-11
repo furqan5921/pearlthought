@@ -6,7 +6,7 @@ export const storage = {
   // Get all teachers from localStorage
   getTeachers: (): Teacher[] => {
     if (typeof window === "undefined") return [];
-    
+
     try {
       const data = localStorage.getItem(STORAGE_KEY);
       return data ? JSON.parse(data) : [];
@@ -19,7 +19,7 @@ export const storage = {
   // Save teachers to localStorage
   saveTeachers: (teachers: Teacher[]): void => {
     if (typeof window === "undefined") return;
-    
+
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(teachers));
     } catch (error) {
@@ -35,7 +35,7 @@ export const storage = {
       id: crypto.randomUUID(),
       status: "active",
     };
-    
+
     const updatedTeachers = [...teachers, newTeacher];
     storage.saveTeachers(updatedTeachers);
     return newTeacher;
@@ -44,10 +44,10 @@ export const storage = {
   // Update an existing teacher
   updateTeacher: (id: string, updates: Partial<Teacher>): Teacher | null => {
     const teachers = storage.getTeachers();
-    const index = teachers.findIndex(t => t.id === id);
-    
+    const index = teachers.findIndex((t) => t.id === id);
+
     if (index === -1) return null;
-    
+
     const updatedTeacher = { ...teachers[index], ...updates };
     teachers[index] = updatedTeacher;
     storage.saveTeachers(teachers);
@@ -57,10 +57,10 @@ export const storage = {
   // Delete a teacher
   deleteTeacher: (id: string): boolean => {
     const teachers = storage.getTeachers();
-    const filteredTeachers = teachers.filter(t => t.id !== id);
-    
+    const filteredTeachers = teachers.filter((t) => t.id !== id);
+
     if (filteredTeachers.length === teachers.length) return false;
-    
+
     storage.saveTeachers(filteredTeachers);
     return true;
   },
@@ -68,7 +68,7 @@ export const storage = {
   // Get teacher by ID
   getTeacherById: (id: string): Teacher | null => {
     const teachers = storage.getTeachers();
-    return teachers.find(t => t.id === id) || null;
+    return teachers.find((t) => t.id === id) || null;
   },
 
   // Clear all data
@@ -81,7 +81,7 @@ export const storage = {
 // Initialize with sample data if empty
 export const initializeSampleData = (): void => {
   const existingTeachers = storage.getTeachers();
-  
+
   if (existingTeachers.length === 0) {
     const sampleTeachers: Teacher[] = [
       {
@@ -121,7 +121,7 @@ export const initializeSampleData = (): void => {
         status: "active",
       },
     ];
-    
+
     storage.saveTeachers(sampleTeachers);
   }
 };

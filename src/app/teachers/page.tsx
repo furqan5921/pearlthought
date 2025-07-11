@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { TeachersSection } from '@/components/sections/TeachersSection';
 import { useTeacherStore } from '@/lib/store';

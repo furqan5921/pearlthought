@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Teacher Management System",
   description: "A modern, responsive teacher management interface built with Next.js, TypeScript, and Tailwind CSS",
   keywords: ["teacher", "management", "education", "dashboard", "nextjs", "typescript"],
-  authors: [{ name: "Your Name" }],
+  authors: [{ name: "Mohammad Furqan" }],
   viewport: "width=device-width, initial-scale=1",
 };
 

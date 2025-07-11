@@ -46,12 +46,7 @@ import {
 
 export function AttendanceSection() {
   const { teachers } = useTeacherStore();
-  const {
-    attendance,
-    leaveRequests,
-    getAttendanceByDate,
-    getPendingLeaveRequests,
-  } = useAttendanceStore();
+  const { getAttendanceByDate, getPendingLeaveRequests } = useAttendanceStore();
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
