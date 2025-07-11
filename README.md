@@ -37,7 +37,7 @@ A modern, responsive, and intuitive teacher management dashboard built with Next
 - **Local Storage**: Persistent data storage with sample data initialization
 - **Component Architecture**: Modular, reusable components following React best practices
 - **Performance Optimized**: Efficient rendering and state management
-- **Modern React**: React 19 with latest features and hooks
+- **Modern React**: Nextjs 15 with latest features and hooks
 
 ## 🚀 Quick Start
 
