@@ -21,8 +21,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TeacherForm } from "@/components/TeacherForm";
 import { useTeacherStore } from "@/lib/store";
 import { Teacher } from "@/lib/types";
+import { TeacherFormData } from "@/lib/validations/teacher";
 import {
   Calendar,
   Edit,
@@ -37,17 +39,89 @@ import {
   Users,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function TeachersSection() {
-  const { teachers, deleteTeacher } = useTeacherStore();
+  const { teachers, addTeacher, deleteTeacher } = useTeacherStore();
   const [searchTerm, setSearchTerm] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
 
-  // Get unique departments
+  // Get unique departments and subjects
   const departments = Array.from(new Set(teachers.map((t) => t.department)));
+  const subjects = Array.from(new Set(teachers.flatMap((t) => t.subject)));
+
+  // Handle form submission
+  const handleAddTeacher = (formData: TeacherFormData) => {
+    try {
+      // Generate unique IDs
+      const teacherId = crypto.randomUUID();
+      const employeeId = `EMP${Date.now().toString().slice(-6)}`;
+      
+      // Split name into first and last name
+      const nameParts = formData.name.trim().split(' ');
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(' ') || '';
+
+      // Create complete teacher object
+      const newTeacher: Teacher = {
+        id: teacherId,
+        employeeId,
+        firstName,
+        lastName,
+        email: formData.email,
+        phone: formData.phone,
+        avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(formData.name)}`,
+        dateOfBirth: new Date(Date.now() - (25 + Math.random() * 15) * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Random age between 25-40
+        hireDate: formData.joinDate,
+        
+        // Professional Information
+        department: formData.department,
+        subject: [formData.subject], // Convert single subject to array
+        qualification: formData.qualification,
+        experience: formData.experience,
+        salary: 60000 + (formData.experience * 2000) + Math.floor(Math.random() * 20000), // Base salary with experience bonus
+        employmentType: 'full-time',
+        status: 'active',
+        
+        // Default address
+        address: {
+          street: '123 Main Street',
+          city: 'City',
+          state: 'State',
+          zipCode: '12345',
+          country: 'Country'
+        },
+        
+        // Default emergency contact
+        emergencyContact: {
+          name: 'Emergency Contact',
+          relationship: 'Family',
+          phone: '+1234567890'
+        },
+        
+        // Empty documents array
+        documents: [],
+        
+        // Performance
+        performanceRating: 4.0 + Math.random(), // Random rating between 4.0-5.0
+        lastReviewDate: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 3 months ago
+        
+        // Metadata
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      addTeacher(newTeacher);
+      setShowAddDialog(false);
+      toast.success(`Teacher ${formData.name} added successfully!`);
+    } catch (error) {
+      console.error('Error adding teacher:', error);
+      toast.error('Failed to add teacher. Please try again.');
+    }
+  };
 
   // Filter teachers based on search and filters
   const filteredTeachers = teachers.filter((teacher) => {
@@ -90,17 +164,19 @@ export function TeachersSection() {
               <span>Add Teacher</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl mx-4">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-4">
             <DialogHeader>
               <DialogTitle>Add New Teacher</DialogTitle>
               <DialogDescription>
                 Fill in the teacher&apos;s information to add them to the system.
               </DialogDescription>
             </DialogHeader>
-            <div className="p-4">
-              <p className="text-sm text-gray-500">
-                Teacher form would go here...
-              </p>
+            <div className="mt-4">
+              <TeacherForm
+                onSubmit={handleAddTeacher}
+                departments={departments}
+                subjects={subjects}
+              />
             </div>
           </DialogContent>
         </Dialog>
