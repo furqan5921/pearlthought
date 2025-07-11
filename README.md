@@ -9,26 +9,35 @@ A modern, responsive, and intuitive teacher management dashboard built with Next
 ## ✨ Features
 
 ### 🎯 Core Functionality
-- **Add Teachers**: Comprehensive form with validation for adding new teachers
-- **View Teachers**: Beautiful card-based layout with detailed teacher information
-- **Search & Filter**: Advanced filtering by department, subject, status, and search functionality
-- **Statistics Dashboard**: Real-time statistics showing total, active, inactive teachers and departments
+- **Dashboard**: Comprehensive overview with statistics and quick access to all sections
+- **Teacher Management**: Complete CRUD operations for teacher data
+  - Add new teachers with comprehensive form validation
+  - View teachers in beautiful card-based layout
+  - Search and filter by department, subject, and status
+- **Attendance Tracking**: Monitor teacher attendance and leave requests
+- **Salary Management**: Handle salary information and payroll data
+- **Progress Analytics**: Track performance metrics and analytics
+- **Settings**: Application configuration and preferences
 - **Responsive Design**: Mobile-first approach ensuring perfect experience across all devices
 
 ### 🎨 UI/UX Features
 - **Modern Design**: Clean, professional interface following current design trends
+- **Navigation**: Intuitive sidebar navigation with section-based routing
 - **Dark/Light Mode**: Automatic theme switching based on system preferences
 - **Smooth Animations**: Subtle transitions and micro-interactions
 - **Accessibility**: WCAG-compliant with proper focus indicators and ARIA attributes
 - **Loading States**: Elegant loading animations and skeleton screens
-- **Toast Notifications**: Real-time feedback for user actions
+- **Toast Notifications**: Real-time feedback for user actions using Sonner
+- **Modal Dialogs**: Seamless form interactions with Radix UI dialogs
 
 ### 🔧 Technical Features
 - **Type Safety**: Full TypeScript implementation with strict type checking
 - **Form Validation**: Robust validation using Zod and React Hook Form
+- **State Management**: Zustand for efficient global state management
 - **Local Storage**: Persistent data storage with sample data initialization
 - **Component Architecture**: Modular, reusable components following React best practices
 - **Performance Optimized**: Efficient rendering and state management
+- **Modern React**: React 19 with latest features and hooks
 
 ## 🚀 Quick Start
 
@@ -41,7 +50,7 @@ A modern, responsive, and intuitive teacher management dashboard built with Next
 1. **Clone the repository**
    ```bash
    git clone https://github.com/furqan5921/pearlthought.git
-   cd teacher-management-system
+   cd pearlthought
    ```
 
 2. **Install dependencies**
@@ -71,34 +80,119 @@ npm start
 ## 🏗️ Project Structure
 
 ```
-src/
-├── app/                    # Next.js App Router
-│   ├── globals.css        # Global styles and Tailwind imports
-│   ├── layout.tsx         # Root layout component
-│   └── page.tsx           # Main page component
-├── components/            # React components
-│   ├── ui/               # Reusable UI components
-│   │   ├── avatar.tsx
-│   │   ├── badge.tsx
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── input.tsx
-│   │   ├── label.tsx
-│   │   └── select.tsx
-│   ├── Header.tsx        # Statistics header component
-│   ├── TeacherCard.tsx   # Individual teacher card
-│   ├── TeacherForm.tsx   # Add/edit teacher form
-│   └── TeacherList.tsx   # Teachers list with filters
-├── hooks/                # Custom React hooks
-│   └── useTeachers.ts    # Teacher management hook
-├── lib/                  # Utility functions
-│   ├── storage.ts        # Local storage management
-│   ├── utils.ts          # General utilities
-│   └── validations/      # Form validation schemas
-│       └── teacher.ts
-└── types/                # TypeScript type definitions
-    └── teacher.ts
+pearlthought/
+├── public/                     # Static assets
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── globals.css         # Global styles and Tailwind imports
+│   │   ├── layout.tsx          # Root layout with Toaster integration
+│   │   ├── page.tsx            # Dashboard home page
+│   │   ├── favicon.ico         # Application favicon
+│   │   ├── analytics/          # Analytics section
+│   │   │   └── page.tsx
+│   │   ├── attendance/         # Attendance management
+│   │   │   └── page.tsx
+│   │   ├── progress/           # Progress tracking
+│   │   │   └── page.tsx
+│   │   ├── salary/             # Salary management
+│   │   │   └── page.tsx
+│   │   ├── settings/           # Application settings
+│   │   │   └── page.tsx
+│   │   └── teachers/           # Teacher management
+│   │       └── page.tsx
+│   ├── components/             # React components
+│   │   ├── ui/                 # Reusable UI components (shadcn/ui)
+│   │   │   ├── avatar.tsx      # User avatar component
+│   │   │   ├── badge.tsx       # Status badges
+│   │   │   ├── button.tsx      # Button variants
+│   │   │   ├── card.tsx        # Card containers
+│   │   │   ├── dialog.tsx      # Modal dialogs
+│   │   │   ├── input.tsx       # Form inputs
+│   │   │   ├── label.tsx       # Form labels
+│   │   │   ├── select.tsx      # Dropdown selects
+│   │   │   ├── separator.tsx   # Visual separators
+│   │   │   ├── switch.tsx      # Toggle switches
+│   │   │   ├── tabs.tsx        # Tab navigation
+│   │   │   └── textarea.tsx    # Text areas
+│   │   ├── dashboard/          # Dashboard-specific components
+│   │   │   └── DashboardHome.tsx
+│   │   ├── layout/             # Layout components
+│   │   │   ├── MainLayout.tsx  # Main application layout
+│   │   │   ├── Sidebar.tsx     # Navigation sidebar
+│   │   │   └── TopBar.tsx      # Top navigation bar
+│   │   ├── sections/           # Section-specific components
+│   │   │   ├── AnalyticsSection.tsx
+│   │   │   ├── AttendanceSection.tsx
+│   │   │   ├── ProgressSection.tsx
+│   │   │   ├── SalarySection.tsx
+│   │   │   ├── SettingsSection.tsx
+│   │   │   └── TeachersSection.tsx  # Teacher management with form integration
+│   │   ├── Header.tsx          # Statistics header component
+│   │   ├── TeacherCard.tsx     # Individual teacher card
+│   │   ├── TeacherForm.tsx     # Add/edit teacher form with validation
+│   │   └── TeacherList.tsx     # Teachers list with filters
+│   ├── hooks/                  # Custom React hooks
+│   │   └── useTeachers.ts      # Teacher management hook
+│   ├── lib/                    # Utility functions and configurations
+│   │   ├── mock-data.ts        # Sample data for development
+│   │   ├── storage.ts          # Local storage management
+│   │   ├── store.ts            # Zustand store configuration
+│   │   ├── types.ts            # Shared type definitions
+│   │   ├── utils.ts            # General utilities and cn helper
+│   │   └── validations/        # Form validation schemas
+│   │       └── teacher.ts      # Teacher form validation with Zod
+│   ├── types/                  # TypeScript type definitions
+│   │   └── teacher.ts          # Teacher-related types
+│   └── assets/                 # Additional assets (if any)
+├── .gitignore                  # Git ignore rules
+├── components.json             # shadcn/ui configuration
+├── eslint.config.mjs          # ESLint configuration
+├── next.config.ts             # Next.js configuration
+├── package.json               # Dependencies and scripts
+├── postcss.config.mjs         # PostCSS configuration
+├── README.md                  # Project documentation
+└── tsconfig.json              # TypeScript configuration
 ```
+
+## 📦 Dependencies
+
+### Core Dependencies
+- **Next.js 15.3.5**: React framework with App Router
+- **React 19**: Latest React with concurrent features
+- **TypeScript 5**: Static type checking
+- **Tailwind CSS 4**: Utility-first CSS framework
+
+### UI & Components
+- **Radix UI**: Accessible component primitives
+  - `@radix-ui/react-avatar`: Avatar components
+  - `@radix-ui/react-dialog`: Modal dialogs
+  - `@radix-ui/react-label`: Form labels
+  - `@radix-ui/react-select`: Dropdown selects
+  - `@radix-ui/react-tabs`: Tab navigation
+  - `@radix-ui/react-toast`: Toast notifications
+- **Lucide React**: Beautiful icon library
+- **class-variance-authority**: Component variant management
+- **clsx & tailwind-merge**: Conditional CSS classes
+
+### Form & Validation
+- **React Hook Form**: Efficient form state management
+- **Zod 4**: TypeScript-first schema validation
+- **@hookform/resolvers**: Form validation resolvers
+
+### State & Data
+- **Zustand 5**: Lightweight state management
+- **date-fns**: Date manipulation utilities
+
+### Notifications & UI Feedback
+- **Sonner**: Toast notification system
+
+### Charts & Analytics
+- **Recharts**: React charting library
 
 ## 🎨 Design System
 
@@ -119,14 +213,15 @@ src/
 - **Buttons**: Multiple variants (default, outline, ghost, destructive)
 - **Forms**: Consistent styling with proper validation states
 - **Badges**: Status indicators with semantic colors
+- **Dialogs**: Modal overlays for forms and confirmations
 
 ## 📱 Responsive Design
 
 The application is built with a mobile-first approach:
 
-- **Mobile (320px+)**: Single column layout, stacked cards
+- **Mobile (320px+)**: Single column layout, collapsible sidebar
 - **Tablet (768px+)**: Two-column grid, expanded forms
-- **Desktop (1024px+)**: Three-column grid, full feature set
+- **Desktop (1024px+)**: Full sidebar, three-column grid
 - **Large (1280px+)**: Optimized spacing and typography
 
 ## ♿ Accessibility Features
@@ -140,6 +235,7 @@ The application is built with a mobile-first approach:
 ## 🔧 Technical Implementation
 
 ### State Management
+- **Zustand Store**: Global state for teachers, settings, and UI state
 - **React Hooks**: useState, useEffect, useCallback for local state
 - **Custom Hooks**: useTeachers for centralized teacher management
 - **Local Storage**: Persistent data with automatic initialization
@@ -148,33 +244,43 @@ The application is built with a mobile-first approach:
 - **React Hook Form**: Efficient form state management
 - **Zod Validation**: Type-safe schema validation
 - **Error Handling**: Comprehensive error states and messages
+- **Toast Notifications**: Real-time feedback using Sonner
+
+### Routing & Navigation
+- **Next.js App Router**: File-based routing with layouts
+- **Dynamic Routes**: Section-based navigation
+- **Sidebar Navigation**: Persistent navigation across routes
 
 ### Data Flow
 1. **Storage Layer**: Local storage with CRUD operations
-2. **Hook Layer**: useTeachers provides data and actions
-3. **Component Layer**: UI components consume hook data
-4. **User Interaction**: Forms and buttons trigger hook actions
+2. **Store Layer**: Zustand provides global state management
+3. **Hook Layer**: useTeachers provides data and actions
+4. **Component Layer**: UI components consume hook data
+5. **User Interaction**: Forms and buttons trigger store actions
 
 ## 🎯 Key Features Explained
 
+### Dashboard
+- **Statistics Overview**: Real-time metrics and KPIs
+- **Quick Actions**: Direct access to common tasks
+- **Recent Activity**: Latest updates and changes
+
 ### Teacher Management
-- **Add Teacher**: Multi-step form with validation
-- **Edit Teacher**: In-place editing (planned feature)
-- **Delete Teacher**: Confirmation and soft delete
+- **Add Teacher**: Comprehensive form with validation
+  - Personal information (name, email, phone, join date)
+  - Professional information (department, subject, qualification, experience)
+  - Form validation with Zod schemas
+  - Toast notifications for success/error feedback
+- **View Teachers**: Card-based layout with detailed information
+- **Search & Filter**: Advanced filtering capabilities
 - **Status Management**: Active/inactive teacher states
 
-### Search & Filtering
-- **Text Search**: Search across name, email, and subject
-- **Department Filter**: Filter by department
-- **Subject Filter**: Filter by teaching subject
-- **Status Filter**: Filter by active/inactive status
-- **Clear Filters**: Reset all filters with one click
-
-### Statistics Dashboard
-- **Real-time Updates**: Statistics update as data changes
-- **Visual Indicators**: Color-coded statistics cards
-- **Department Count**: Unique department tracking
-- **Status Breakdown**: Active vs inactive teacher counts
+### Section-Based Architecture
+- **Analytics**: Performance metrics and reporting
+- **Attendance**: Attendance tracking and leave management
+- **Progress**: Progress monitoring and goal tracking
+- **Salary**: Payroll and compensation management
+- **Settings**: Application configuration and preferences
 
 ## 🚀 Deployment
 
@@ -205,11 +311,13 @@ CMD ["npm", "start"]
 - [ ] **Edit Teacher**: In-place editing functionality
 - [ ] **Bulk Operations**: Select and manage multiple teachers
 - [ ] **Export Data**: CSV/PDF export functionality
-- [ ] **Advanced Analytics**: Charts and reporting
+- [ ] **Advanced Analytics**: Charts and reporting with Recharts
 - [ ] **User Authentication**: Login and role-based access
 - [ ] **API Integration**: Backend API connectivity
 - [ ] **File Upload**: Teacher photo upload
 - [ ] **Email Integration**: Send notifications to teachers
+- [ ] **Calendar Integration**: Schedule management
+- [ ] **Mobile App**: React Native companion app
 
 ### Technical Improvements
 - [ ] **Unit Tests**: Jest and React Testing Library
@@ -217,6 +325,8 @@ CMD ["npm", "start"]
 - [ ] **Performance**: React.memo and useMemo optimizations
 - [ ] **PWA**: Progressive Web App features
 - [ ] **Internationalization**: Multi-language support
+- [ ] **Database Integration**: PostgreSQL or MongoDB
+- [ ] **Real-time Updates**: WebSocket integration
 
 ## 🤝 Contributing
 
@@ -225,6 +335,13 @@ CMD ["npm", "start"]
 3. Commit your changes: `git commit -m 'Add amazing feature'`
 4. Push to the branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
+
+### Development Guidelines
+- Follow TypeScript best practices
+- Use ESLint and Prettier for code formatting
+- Write meaningful commit messages
+- Add proper type definitions
+- Test your changes thoroughly
 
 ## 📄 License
 
@@ -237,9 +354,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Radix UI** for accessible component primitives
 - **Lucide React** for beautiful icons
 - **Vercel** for seamless deployment
+- **Zustand** for lightweight state management
+- **React Hook Form** for efficient form handling
+- **Zod** for runtime type validation
 
 ---
 
-**Built with ❤️ using Next.js, TypeScript, and Tailwind CSS**
+**Built with ❤️ using Next.js, TypeScript, Tailwind CSS, and modern React patterns**
 
 For questions or support, please open an issue on GitHub.
