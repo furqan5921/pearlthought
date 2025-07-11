@@ -40,7 +40,7 @@ A modern, responsive, and intuitive teacher management dashboard built with Next
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/teacher-management-system.git
+   git clone https://github.com/furqan5921/pearlthought.git
    cd teacher-management-system
    ```
 
